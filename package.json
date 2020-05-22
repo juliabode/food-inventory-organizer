@@ -2,8 +2,10 @@
   "name": "freezerinventoryorganizer",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
+  "main": "app.js",
+  "engines": {
+    "npm": "6.4.1",
+    "node": "8.12.0"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -13,5 +15,9 @@
     "jade": "~1.11.0",
     "mongoose": "^5.9.15",
     "morgan": "~1.9.1"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   }
 }
