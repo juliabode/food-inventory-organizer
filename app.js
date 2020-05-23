@@ -22,9 +22,9 @@ app.use(express.static(path.join(__dirname, 'react/build')));
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+//app.use(function(req, res, next) {
+//  next(createError(404));
+//});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
