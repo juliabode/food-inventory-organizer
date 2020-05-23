@@ -20,6 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from '../dashboard/listItems';
 import Orders from '../dashboard/Orders';
+import AddProductForm from './AddProductForm';
 
 
 const drawerWidth = 240;
@@ -151,11 +152,18 @@ export default function Freezer() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid>
+          <Grid container spacing={3}>
+            {/* All Products */}
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Orders />
+              </Paper>
+            </Grid>
+            <div className={classes.appBarSpacer} />
             {/* Recent Orders */}
             <Grid item xs={12}>
-              <Paper>
-                <Orders />
+              <Paper className={classes.paper}>
+                <AddProductForm />
               </Paper>
             </Grid>
           </Grid>

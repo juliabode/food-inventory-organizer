@@ -3,11 +3,11 @@ let Schema = mongoose.Schema;
 
 const productsSchema = new Schema({
   name: String,
-  freezeDate: Number,
-  mhd: Number,
+  freezeDate: Date,
+  mhd: Date,
   type: String,
   quantity: String,
-  notes: String,
+  notes: String
 })
 
 const Product = mongoose.model('Product', productsSchema);
