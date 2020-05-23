@@ -17,7 +17,7 @@ function ListItemLink(props) {
 
 export const mainListItems = (
   <div>
-    <ListItemLink href="/dashboard">
+    <ListItemLink href="/">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>

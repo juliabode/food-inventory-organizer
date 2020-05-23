@@ -6,12 +6,7 @@ import Freezer from './myComponents/Freezer.js';
 const Routes = () => {
   return (
     <Switch>
-      <Redirect
-        exact
-        from='/'
-        to='/dashboard'
-      />
-      <Route path='/dashboard'>
+      <Route exact path='/'>
         <Dashboard />
       </Route>
       <Route path='/freezer'>
