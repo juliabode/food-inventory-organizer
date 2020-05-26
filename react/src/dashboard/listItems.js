@@ -10,6 +10,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import Freezer from '../myComponents/Freezer.js';
+import KitchenIcon from '@material-ui/icons/Kitchen';
 
 function ListItemLink(props) {
   return <ListItem button component='a' {...props} />;
@@ -25,7 +26,7 @@ export const mainListItems = (
     </ListItemLink>
     <ListItemLink href="/freezer">
       <ListItemIcon>
-        <BarChartIcon />
+        <KitchenIcon />
       </ListItemIcon>
       <ListItemText primary="Freezer" />
     </ListItemLink>

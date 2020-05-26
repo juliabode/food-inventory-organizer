@@ -3,19 +3,24 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const basicAuth = require('express-basic-auth')
+const dotenv = require('dotenv');
+dotenv.config();
 
 var productsRouter = require('./routes/products');
 
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.use(basicAuth({
+    users: { 'admin' : process.env.ADMIN_PASS },
+    challenge: true
+}))
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'react/build')));
 
 app.use('/api/products', productsRouter);
@@ -33,7 +38,5 @@ app.get('*', (req, res) => {
 
 const port = process.env.PORT || 3001;
 app.listen(port);
-
-console.log(`Password generator listening on ${port}`);
 
 module.exports = app;
