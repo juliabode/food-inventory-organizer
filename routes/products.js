@@ -21,6 +21,8 @@ router.post('/', function(req, res) {
     mhd: req.body.mhd,
     type: req.body.type,
     quantity: req.body.quantity,
+    freezerLocation: req.body.freezerLocation,
+    compartment: req.body.compartment,
     notes: req.body.notes
   }).then(product => {
     res.json(product)

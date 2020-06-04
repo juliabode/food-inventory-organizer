@@ -1,0 +1,63 @@
+{
+  "translations": {
+    "freezer": {
+      "products": {
+        "title": "Products",
+        "table": {
+          "header": {
+            "name": "Name",
+            "freezeDate": "Freeze Date",
+            "bestBefore": "Best Before",
+            "type": "Type",
+            "quantity": "Quantity",
+            "freezerLocation": "Location",
+            "compartment": "Box",
+            "notes": "Notes"
+          },
+          "type": {
+            "fish": "Fish",
+            "meat": "Meat",
+            "vegetable": "Vegetable",
+            "fruit": "Fruit",
+            "bread": "Bread",
+            "misc": "Miscellaneous"
+          },
+          "freezerLocation": {
+            "cellarChest": "Chest Freezer",
+            "cellar": "Cellar",
+            "parents": "Parents",
+            "grandfather": "Grandfather"
+          }
+        },
+        "add": {
+          "title": "Insert new product",
+          "form": {
+            "name": "Name",
+            "freezeDate": "Freeze Date",
+            "bestBefore": "Best Before",
+            "type": {
+              "label": "Type",
+              "fish": "Fish",
+              "meat": "Meat",
+              "vegetable": "Vegetable",
+              "fruit": "Fruit",
+              "bread": "Bread",
+              "misc": "Miscellaneous"
+            },
+            "quantity": "Quantity",
+            "freezerLocation": {
+              "label": "Location",
+              "cellarChest": "Chest Freezer",
+              "cellar": "Cellar",
+              "parents": "Parents",
+              "grandfather": "Grandfather"
+            },
+            "compartment": "Box",
+            "notes": "Notes",
+            "saveData": "Save"
+          }
+        }
+      }
+    }
+  }
+}

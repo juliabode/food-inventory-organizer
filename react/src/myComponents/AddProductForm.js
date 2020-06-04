@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import DateFnsUtils from '@date-io/date-fns';
+import { Trans } from 'react-i18next';
 import {
   MuiPickersUtilsProvider,
   DatePicker
@@ -25,7 +26,9 @@ export default class AddProductForm extends React.Component {
       quantity: '',
       type: '',
       mhd: null,
-      freezeDate: null
+      freezeDate: null,
+      freezerLocation: '',
+      compartement: ''
     };
   }
 
@@ -49,7 +52,9 @@ export default class AddProductForm extends React.Component {
       'freezeDate': this.state.freezeDate,
       'mhd': this.state.mhd,
       'quantity': this.state.quantity,
-      'type': this.state.type
+      'type': this.state.type,
+      'freezerLocation': this.state.freezerLocation,
+      'compartment': this.state.compartment
     };
 
     fetch('/api/products', {
@@ -65,7 +70,7 @@ export default class AddProductForm extends React.Component {
     return (
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
-          Insert new product
+          <Trans>freezer.products.add.title</Trans>
         </Typography>
         <form onSubmit={this.handleSubmit}>
           <Grid container spacing={3}>
@@ -73,7 +78,7 @@ export default class AddProductForm extends React.Component {
               <TextField
                 id="name"
                 name="name"
-                label="Name"
+                label=<Trans>freezer.products.add.form.name</Trans>
                 fullWidth
                 required
                 value={this.state.name}
@@ -88,7 +93,7 @@ export default class AddProductForm extends React.Component {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   format="dd. MM. yyyy"
-                  label="Datum"
+                  label=<Trans>freezer.products.add.form.freezeDate</Trans>
                   name="freezeDate"
                   fullWidth
                   value={this.state.freezeDate}
@@ -104,7 +109,7 @@ export default class AddProductForm extends React.Component {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   format="dd. MM. yyyy"
-                  label="Mindesthaltbarkeit"
+                  label=<Trans>freezer.products.add.form.bestBefore</Trans>
                   fullWidth
                   name="mhd"
                   value={this.state.mhd}
@@ -118,7 +123,7 @@ export default class AddProductForm extends React.Component {
 
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth>
-                <InputLabel id="type-label">Type</InputLabel>
+                <InputLabel id="type-label"><Trans>freezer.products.add.form.type.label</Trans></InputLabel>
                 <Select
                   labelId="type-label"
                   id="type"
@@ -127,11 +132,12 @@ export default class AddProductForm extends React.Component {
                   value={this.state.type}
                   onChange={this.onChange}
                 >
-                  <MenuItem value="fish">Fisch</MenuItem>
-                  <MenuItem value="meat">Fleisch</MenuItem>
-                  <MenuItem value="vegetable">Gemüse</MenuItem>
-                  <MenuItem value="fruit">Obst</MenuItem>
-                  <MenuItem value="misc">Verschiedenes</MenuItem>
+                  <MenuItem value="fish"><Trans>freezer.products.add.form.type.fish</Trans></MenuItem>
+                  <MenuItem value="meat"><Trans>freezer.products.add.form.type.meat</Trans></MenuItem>
+                  <MenuItem value="vegetable"><Trans>freezer.products.add.form.type.vegetable</Trans></MenuItem>
+                  <MenuItem value="fruit"><Trans>freezer.products.add.form.type.fruit</Trans></MenuItem>
+                  <MenuItem value="fruit"><Trans>freezer.products.add.form.type.bread</Trans></MenuItem>
+                  <MenuItem value="misc"><Trans>freezer.products.add.form.type.misc</Trans></MenuItem>
                 </Select>
               </FormControl>
             </Grid>
@@ -142,7 +148,7 @@ export default class AddProductForm extends React.Component {
             <Grid item xs={12} sm={6}>
               <TextField
                 id="quantity"
-                label="Quantity"
+                label=<Trans>freezer.products.add.form.quantity</Trans>
                 name="quantity"
                 type="number"
                 fullWidth
@@ -155,9 +161,47 @@ export default class AddProductForm extends React.Component {
             </Grid>
 
             <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="freezerLocation-label"><Trans>freezer.products.add.form.freezerLocation.label</Trans></InputLabel>
+                <Select
+                  labelId="freezerLocation-label"
+                  id="freezerLocation"
+                  name="freezerLocation"
+                  required
+                  value={this.state.freezerLocation}
+                  onChange={this.onChange}
+                >
+                  <MenuItem value="cellarChest"><Trans>freezer.products.add.form.freezerLocation.cellarChest</Trans></MenuItem>
+                  <MenuItem value="cellar"><Trans>freezer.products.add.form.freezerLocation.cellar</Trans></MenuItem>
+                  <MenuItem value="parents"><Trans>freezer.products.add.form.freezerLocation.parents</Trans></MenuItem>
+                  <MenuItem value="grandfather"><Trans>freezer.products.add.form.freezerLocation.grandfather</Trans></MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                id="compartment"
+                label=<Trans>freezer.products.add.form.compartment</Trans>
+                name="compartment"
+                type="number"
+                inputProps={{ min: "1", max: "4" }}
+                fullWidth
+                value={this.state.compartment}
+                onChange={this.onChange}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
               <TextField
                 id="notes"
-                label="Notes"
+                label=<Trans>freezer.products.add.form.notes</Trans>
                 name="notes"
                 fullWidth
                 value={this.state.notes}
@@ -170,7 +214,7 @@ export default class AddProductForm extends React.Component {
 
             <Grid item xs={12} sm={6}>
               <Button variant="contained" color="primary" type="submit">
-                Send data!
+                <Trans>freezer.products.add.form.saveData</Trans>
               </Button>
             </Grid>
           </Grid>

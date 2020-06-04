@@ -1,0 +1,63 @@
+{
+  "translations": {
+    "freezer": {
+      "products": {
+        "title": "Produkte",
+        "table": {
+          "header": {
+            "name": "Name",
+            "freezeDate": "Datum",
+            "bestBefore": "MHD",
+            "type": "Typ",
+            "quantity": "Menge",
+            "freezerLocation": "Ort",
+            "compartment": "Fach",
+            "notes": "Hinweise"
+          },
+          "type": {
+            "fish": "Fisch",
+            "meat": "Fleisch",
+            "vegetable": "Gemüse",
+            "fruit": "Obst",
+            "bread": "Brot",
+            "misc": "Verschiedenes"
+          },
+          "freezerLocation": {
+            "cellarChest": "Gefriertruhe",
+            "cellar": "Keller",
+            "parents": "Eltern",
+            "grandfather": "Opa"
+          }
+        },
+        "add": {
+          "title": "Neues Produckt hinzufügen",
+          "form": {
+            "name": "Name",
+            "freezeDate": "Gefrierdatum",
+            "bestBefore": "Mindesthaltbarkeitsdatum",
+            "type": {
+              "label": "Typ",
+              "fish": "Fisch",
+              "meat": "Fleisch",
+              "vegetable": "Gemüse",
+              "fruit": "Obst",
+              "bread": "Brot",
+              "misc": "Verschiedenes"
+            },
+            "quantity": "Menge",
+            "freezerLocation": {
+              "label": "Ort",
+              "cellarChest": "Gefriertruhe",
+              "cellar": "Keller",
+              "parents": "Eltern",
+              "grandfather": "Opa"
+            },
+            "compartment": "Fach",
+            "notes": "Hinweise",
+            "saveData": "Speichern"
+          }
+        }
+      }
+    }
+  }
+}

@@ -7,6 +7,8 @@ const productsSchema = new Schema({
   mhd: Date,
   type: String,
   quantity: String,
+  freezerLocation: String,
+  compartment: Number,
   notes: String
 })
 
