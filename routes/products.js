@@ -29,4 +29,11 @@ router.post('/', function(req, res) {
   });
 });
 
+/* REMOVE product */
+router.delete('/delete', function (req, res) {
+  Product.deleteOne({
+    _id: req.body._id
+  }).then({});
+});
+
 module.exports = router;
