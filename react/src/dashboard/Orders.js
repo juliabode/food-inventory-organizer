@@ -13,17 +13,18 @@ import Title from './Title';
 export default class Orders extends React.Component {
   constructor() {
     super();
+
+    this.state = {
+      'products': [],
+      'auth': btoa('admin:' + process.env.REACT_APP_ADMIN_PASS)
+    }
   }
 
-  state = {products: []}
-
   componentDidMount() {
-    let auth = btoa('admin:' + process.env.REACT_APP_ADMIN_PASS)
-
     fetch('/api/products', {
-      /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
       headers: {
-        'Authorization': 'Basic ' + auth
+        /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
+        'Authorization': 'Basic ' + this.state.auth
       }
     }).then(res => res.json())
       .then(products => this.setState({ products }));
@@ -38,9 +39,11 @@ export default class Orders extends React.Component {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
+        'Authorization': 'Basic ' + this.state.auth
       },
       body: JSON.stringify(data)
-    }).then(function(response) {
+    }).then(() => {
       this.setState({
         products:
           this.state.products

@@ -33,7 +33,9 @@ router.post('/', function(req, res) {
 router.delete('/delete', function (req, res) {
   Product.deleteOne({
     _id: req.body._id
-  }).then({});
+  }).then(
+    res.send('product removed')
+  );
 });
 
 module.exports = router;

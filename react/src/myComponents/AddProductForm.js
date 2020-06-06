@@ -28,7 +28,8 @@ export default class AddProductForm extends React.Component {
       mhd: null,
       freezeDate: null,
       freezerLocation: '',
-      compartement: ''
+      compartement: '',
+      auth: btoa('admin:' + process.env.REACT_APP_ADMIN_PASS)
     };
   }
 
@@ -61,6 +62,8 @@ export default class AddProductForm extends React.Component {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
+        'Authorization': 'Basic ' + this.state.auth
       },
       body: JSON.stringify(data)
     });
