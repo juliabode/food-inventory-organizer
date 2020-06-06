@@ -26,6 +26,17 @@ export default class Orders extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data)
+    }).then(function(response) {
+      this.setState({
+        products:
+          this.state.products
+            .map(entry => {
+              return (entry._id === productId) ? undefined : entry
+            })
+            .filter(entry => {
+              return !!entry
+            })
+        });
     });
   }
 
