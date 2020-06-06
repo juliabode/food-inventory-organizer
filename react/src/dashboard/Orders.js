@@ -15,6 +15,14 @@ export default class Orders extends React.Component {
     super();
   }
 
+  state = {products: []}
+
+  componentDidMount() {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(products => this.setState({ products }));
+  }
+
   deleteProduct(productId) {
     const data = {
       '_id': productId
@@ -30,22 +38,11 @@ export default class Orders extends React.Component {
       this.setState({
         products:
           this.state.products
-            .map(entry => {
-              return (entry._id === productId) ? undefined : entry
-            })
             .filter(entry => {
-              return !!entry
+              return entry._id !== productId
             })
         });
     });
-  }
-
-  state = {products: []}
-
-  componentDidMount() {
-    fetch('/api/products')
-      .then(res => res.json())
-      .then(products => this.setState({ products }));
   }
 
   render() {
@@ -70,11 +67,35 @@ export default class Orders extends React.Component {
             {this.state.products.map((product) => (
               <TableRow key={product._id}>
                 <TableCell>{product.name}</TableCell>
-                <TableCell>{moment(product.freezeDate).format('DD. MM. YYYY')}</TableCell>
-                <TableCell>{moment(product.mhd).format('DD. MM. YYYY')}</TableCell>
-                <TableCell><Trans>freezer.products.table.type.{product.type}</Trans></TableCell>
+                <TableCell>
+                  {
+                    (product.freezeDate) ? (
+                       moment(product.freezeDate).format('DD. MM. YYYY')
+                    ) : ''
+                  }
+                </TableCell>
+                <TableCell>
+                  {
+                    (product.mhd) ? (
+                       moment(product.mhd).format('DD. MM. YYYY')
+                    ) : ''
+                  }
+                </TableCell>
+                <TableCell>
+                  {
+                    (product.type) ? (
+                       <Trans>freezer.products.table.type.{product.type}</Trans>
+                    ) : ''
+                  }
+                </TableCell>
                 <TableCell align="right">{product.quantity}</TableCell>
-                <TableCell><Trans>freezer.products.table.freezerLocation.{product.freezerLocation}</Trans></TableCell>
+                <TableCell>
+                  {
+                    (product.freezerLocation) ? (
+                       <Trans>freezer.products.table.freezerLocation.{product.freezerLocation}</Trans>
+                    ) : ''
+                  }
+                </TableCell>
                 <TableCell>{product.compartment}</TableCell>
                 <TableCell>{product.notes}</TableCell>
                 <TableCell>
