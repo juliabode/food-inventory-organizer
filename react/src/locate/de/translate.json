@@ -30,7 +30,7 @@
           }
         },
         "add": {
-          "title": "Neues Produckt hinzufügen",
+          "title": "Neues Produkt hinzufügen",
           "form": {
             "name": "Name",
             "freezeDate": "Gefrierdatum",

@@ -18,8 +18,14 @@ export default class Orders extends React.Component {
   state = {products: []}
 
   componentDidMount() {
-    fetch('/api/products')
-      .then(res => res.json())
+    let auth = btoa('admin:' + process.env.REACT_APP_ADMIN_PASS)
+
+    fetch('/api/products', {
+      /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
+      headers: {
+        'Authorization': 'Basic ' + auth
+      }
+    }).then(res => res.json())
       .then(products => this.setState({ products }));
   }
 
