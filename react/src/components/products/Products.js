@@ -11,23 +11,17 @@ import moment from 'moment';
 import Title from '../common/Title';
 
 export default class Orders extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      'products': [],
+      //'products': [],
       'auth': btoa('admin:' + process.env.REACT_APP_ADMIN_PASS)
     }
   }
 
   componentDidMount() {
-    fetch('/api/products', {
-      headers: {
-        /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
-        'Authorization': 'Basic ' + this.state.auth
-      }
-    }).then(res => res.json())
-      .then(products => this.setState({ products }));
+    this.props.getAllProducts();
   }
 
   deleteProduct(productId) {
@@ -44,13 +38,14 @@ export default class Orders extends React.Component {
       },
       body: JSON.stringify(data)
     }).then(() => {
-      this.setState({
+      this.props.onProductDelete(productId);
+      /*this.setState({
         products:
           this.state.products
             .filter(entry => {
               return entry._id !== productId
             })
-        });
+        });*/
     });
   }
 
@@ -73,7 +68,7 @@ export default class Orders extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.products.map((product) => (
+            {this.props.products.map((product) => (
               <TableRow key={product._id}>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>

@@ -17,153 +17,100 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems } from '../common/listItems';
 import Products from '../products/Products';
 import AddProduct from '../products/AddProduct';
+import './Freezer.css';
 
 
-const drawerWidth = 240;
+export default class Freezer extends React.Component {
+  constructor() {
+    super();
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
-  title: {
-    flexGrow: 1,
-  },
-  drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
-    height: 240,
-  },
-}));
+    this.state = {
+      'products': [],
+      'auth': btoa('admin:' + process.env.REACT_APP_ADMIN_PASS)
+    };
 
-export default function Freezer() {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    this.getAllProducts = this.getAllProducts.bind(this);
+    this.onProductDelete = this.onProductDelete.bind(this);
+  }
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Freezer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-        }}
-        open={open}
-      >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
-          </IconButton>
-        </div>
-        <Divider />
-        <List>{mainListItems}</List>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            {/* All Products */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Products />
-              </Paper>
+  getAllProducts() {
+    fetch('/api/products', {
+      headers: {
+        /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
+        'Authorization': 'Basic ' + this.state.auth
+      }
+    }).then(res => res.json())
+      .then(products => this.setState({ products }));
+  }
+
+  onProductDelete(productId) {
+    this.setState({
+      products:
+        this.state.products
+          .filter(entry => {
+            return entry._id !== productId
+          })
+    });
+  }
+
+  render() {
+    return (
+      <div className="jss1">
+        <CssBaseline />
+        <AppBar position="absolute" className="jss4 jss5">
+          <Toolbar className="jss2">
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              className="jss6 jss7"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography component="h1" variant="h6" color="inherit" noWrap className="jss8">
+              Freezer
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          open='open'
+          classes={{
+            paper: "jss9"
+          }}
+        >
+          <div className="jss3">
+            <IconButton>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+          <Divider />
+          <List>{mainListItems}</List>
+        </Drawer>
+        <main className="jss12">
+          <div className="jss11"/>
+          <Container maxWidth="lg" className="jss13">
+            <Grid container spacing={3}>
+              {/* All Products */}
+              <Grid item xs={12}>
+                <Paper className="jss14">
+                  <Products
+                    products={this.state.products}
+                    getAllProducts={this.getAllProducts}
+                    onProductDelete={this.onProductDelete} />
+                </Paper>
+              </Grid>
+              <div className="jss11"/>
+              {/* Recent Products */}
+              <Grid item xs={12}>
+                <Paper  className="jss14">
+                  <AddProduct />
+                </Paper>
+              </Grid>
             </Grid>
-            <div className={classes.appBarSpacer} />
-            {/* Recent Products */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <AddProduct />
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
-      </main>
-    </div>
-  )
+          </Container>
+        </main>
+      </div>
+    )
+  }
 }
