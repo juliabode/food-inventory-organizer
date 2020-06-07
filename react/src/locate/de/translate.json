@@ -55,7 +55,8 @@
             },
             "compartment": "Fach",
             "notes": "Hinweise",
-            "saveData": "Speichern"
+            "saveData": "Speichern",
+            "cancel": "Abbrechen"
           }
         }
       }

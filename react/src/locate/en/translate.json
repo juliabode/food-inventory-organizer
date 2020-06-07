@@ -55,7 +55,8 @@
             },
             "compartment": "Box",
             "notes": "Notes",
-            "saveData": "Save"
+            "saveData": "Save",
+            "cancel": "Cancel"
           }
         }
       }

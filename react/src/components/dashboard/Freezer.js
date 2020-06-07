@@ -1,6 +1,4 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -31,6 +29,7 @@ export default class Freezer extends React.Component {
 
     this.getAllProducts = this.getAllProducts.bind(this);
     this.onProductDelete = this.onProductDelete.bind(this);
+    this.addProduct = this.addProduct.bind(this);
   }
 
   getAllProducts() {
@@ -51,6 +50,12 @@ export default class Freezer extends React.Component {
             return entry._id !== productId
           })
     });
+  }
+
+  addProduct(newProduct) {
+    this.setState({
+      products: [...this.state.products, newProduct]
+    })
   }
 
   render() {
@@ -74,7 +79,6 @@ export default class Freezer extends React.Component {
         </AppBar>
         <Drawer
           variant="permanent"
-          open='open'
           classes={{
             paper: "jss9"
           }}
@@ -93,7 +97,10 @@ export default class Freezer extends React.Component {
             <Grid container spacing={3}>
               {/* Add new Products */}
               <Grid item xs={12}>
-                <AddProduct/>
+                <AddProduct
+                  products={this.state.products}
+                  addProduct={this.addProduct}
+                />
               </Grid>
               <div className="jss11"/>
               {/* All Products */}

@@ -2,7 +2,6 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,6 +9,8 @@ import FormControl from '@material-ui/core/FormControl';
 import DateFnsUtils from '@date-io/date-fns';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Trans } from 'react-i18next';
 import {
@@ -19,11 +20,10 @@ import {
 
 export default class AddProductForm extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleDialog = this.handleDialog.bind(this);
 
     this.state = {
       name: '',
@@ -51,12 +51,21 @@ export default class AddProductForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleOpen() {
-    this.setState({ open: true })
+  handleDialog(isOpen) {
+    this.setState({ openDialog: isOpen })
   }
 
-  handleClose() {
-    this.setState({ open: false })
+  resetForm() {
+    this.setState({
+      name: '',
+      notes: '',
+      quantity: '',
+      type: '',
+      mhd: null,
+      freezeDate: null,
+      freezerLocation: '',
+      compartement: ''
+    });
   }
 
   handleSubmit(event) {
@@ -80,6 +89,10 @@ export default class AddProductForm extends React.Component {
         'Authorization': 'Basic ' + this.state.auth
       },
       body: JSON.stringify(data)
+    }).then(() => {
+      this.handleDialog(false);
+      this.resetForm();
+      this.props.addProduct(data);
     });
   }
 
@@ -89,16 +102,16 @@ export default class AddProductForm extends React.Component {
         <Button
           variant="outlined"
           color="primary"
-          onClick={this.handleOpen}
+          onClick={() => this.handleDialog(true)}
           startIcon={<AddCircleIcon />}
           className="jss110" >
             <Trans>freezer.products.add.button</Trans>
         </Button>
-        <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+        <Dialog open={this.state.openDialog} onClose={() => this.handleDialog(false)} aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">
+            <Trans>freezer.products.add.title</Trans>
+          </DialogTitle>
           <DialogContent>
-            <Typography variant="h6" gutterBottom>
-              <Trans>freezer.products.add.title</Trans>
-            </Typography>
             <form onSubmit={this.handleSubmit} className="jss226">
               <TextField
                 id="name"
@@ -117,7 +130,7 @@ export default class AddProductForm extends React.Component {
                     format="dd. MM. yyyy"
                     label=<Trans>freezer.products.add.form.freezeDate</Trans>
                     name="freezeDate"
-
+                    autoOk
                     inputVariant="outlined"
                     value={this.state.freezeDate}
                     onChange={this.onDateChange}
@@ -128,7 +141,7 @@ export default class AddProductForm extends React.Component {
                   <DatePicker
                     format="dd. MM. yyyy"
                     label=<Trans>freezer.products.add.form.bestBefore</Trans>
-
+                    autoOk
                     name="mhd"
                     inputVariant="outlined"
                     value={this.state.mhd}
@@ -206,12 +219,17 @@ export default class AddProductForm extends React.Component {
                 onChange={this.onChange}
                 variant="outlined"
               />
-
-              <Button variant="contained" color="primary" type="submit">
-                <Trans>freezer.products.add.form.saveData</Trans>
-              </Button>
             </form>
           </DialogContent>
+          <DialogActions className="jss112">
+            <Button onClick={() => this.handleDialog(false)} color="primary">
+              <Trans>freezer.products.add.form.cancel</Trans>
+            </Button>
+
+            <Button variant="contained" color="primary" type="submit" onClick={this.handleSubmit}>
+              <Trans>freezer.products.add.form.saveData</Trans>
+            </Button>
+          </DialogActions>
         </Dialog>
       </React.Fragment>
     );

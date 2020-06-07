@@ -91,7 +91,7 @@
 }
 .jss226 > div,
 .jss226 > button {
-  margin: 8px;
+  margin: 8px 8px 8px 0;
 }
 .jss111 {
   margin: 0!important;
@@ -102,4 +102,11 @@
 }
 .jss111 > div:last-child {
   margin-right: -16px!important;
+}
+.jss111 > div:first-child {
+  margin-left: 0!important;
+}
+.jss112 {
+  padding-right: 24px!important;
+  padding-bottom: 24px!important;
 }

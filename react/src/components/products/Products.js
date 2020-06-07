@@ -39,13 +39,6 @@ export default class Orders extends React.Component {
       body: JSON.stringify(data)
     }).then(() => {
       this.props.onProductDelete(productId);
-      /*this.setState({
-        products:
-          this.state.products
-            .filter(entry => {
-              return entry._id !== productId
-            })
-        });*/
     });
   }
 
