@@ -8,6 +8,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import DateFnsUtils from '@date-io/date-fns';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { Trans } from 'react-i18next';
 import {
   MuiPickersUtilsProvider,
@@ -19,6 +22,8 @@ export default class AddProductForm extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
 
     this.state = {
       name: '',
@@ -29,6 +34,7 @@ export default class AddProductForm extends React.Component {
       freezeDate: null,
       freezerLocation: '',
       compartement: '',
+      openDialog: false,
       auth: btoa('admin:' + process.env.REACT_APP_ADMIN_PASS)
     };
   }
@@ -43,6 +49,14 @@ export default class AddProductForm extends React.Component {
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleOpen() {
+    this.setState({ open: true })
+  }
+
+  handleClose() {
+    this.setState({ open: false })
   }
 
   handleSubmit(event) {
@@ -72,60 +86,58 @@ export default class AddProductForm extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Typography variant="h6" gutterBottom>
-          <Trans>freezer.products.add.title</Trans>
-        </Typography>
-        <form onSubmit={this.handleSubmit}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={this.handleOpen}
+          startIcon={<AddCircleIcon />}
+          className="jss110" >
+            <Trans>freezer.products.add.button</Trans>
+        </Button>
+        <Dialog open={this.state.open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
+          <DialogContent>
+            <Typography variant="h6" gutterBottom>
+              <Trans>freezer.products.add.title</Trans>
+            </Typography>
+            <form onSubmit={this.handleSubmit} className="jss226">
               <TextField
                 id="name"
                 name="name"
+                variant="outlined"
                 label=<Trans>freezer.products.add.form.name</Trans>
                 fullWidth
                 required
                 value={this.state.name}
                 onChange={this.onChange}
               />
-            </Grid>
 
-            <Grid item xs={12} sm={6}>
-            </Grid>
+              <div className="jss111">
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DatePicker
+                    format="dd. MM. yyyy"
+                    label=<Trans>freezer.products.add.form.freezeDate</Trans>
+                    name="freezeDate"
 
-            <Grid item xs={12} sm={6}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <DatePicker
-                  format="dd. MM. yyyy"
-                  label=<Trans>freezer.products.add.form.freezeDate</Trans>
-                  name="freezeDate"
-                  fullWidth
-                  value={this.state.freezeDate}
-                  onChange={this.onDateChange}
-                />
-              </MuiPickersUtilsProvider>
-            </Grid>
+                    inputVariant="outlined"
+                    value={this.state.freezeDate}
+                    onChange={this.onDateChange}
+                  />
+                </MuiPickersUtilsProvider>
 
-            <Grid item xs={12} sm={6}>
-            </Grid>
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <DatePicker
+                    format="dd. MM. yyyy"
+                    label=<Trans>freezer.products.add.form.bestBefore</Trans>
 
-            <Grid item xs={12} sm={6}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <DatePicker
-                  format="dd. MM. yyyy"
-                  label=<Trans>freezer.products.add.form.bestBefore</Trans>
-                  fullWidth
-                  name="mhd"
-                  value={this.state.mhd}
-                  onChange={this.onMhdChange}
-                />
-              </MuiPickersUtilsProvider>
-            </Grid>
+                    name="mhd"
+                    inputVariant="outlined"
+                    value={this.state.mhd}
+                    onChange={this.onMhdChange}
+                  />
+                </MuiPickersUtilsProvider>
+              </div>
 
-            <Grid item xs={12} sm={6}>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
+              <FormControl fullWidth variant="outlined">
                 <InputLabel id="type-label"><Trans>freezer.products.add.form.type.label</Trans></InputLabel>
                 <Select
                   labelId="type-label"
@@ -143,65 +155,48 @@ export default class AddProductForm extends React.Component {
                   <MenuItem value="misc"><Trans>freezer.products.add.form.type.misc</Trans></MenuItem>
                 </Select>
               </FormControl>
-            </Grid>
 
-            <Grid item xs={12} sm={6}>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
               <TextField
                 id="quantity"
                 label=<Trans>freezer.products.add.form.quantity</Trans>
                 name="quantity"
                 type="number"
                 fullWidth
+                variant="outlined"
                 value={this.state.quantity}
                 onChange={this.onChange}
               />
-            </Grid>
 
-            <Grid item xs={12} sm={6}>
-            </Grid>
+              <div className="jss111">
+                <FormControl variant="outlined">
+                  <InputLabel id="freezerLocation-label"><Trans>freezer.products.add.form.freezerLocation.label</Trans></InputLabel>
+                  <Select
+                    labelId="freezerLocation-label"
+                    id="freezerLocation"
+                    name="freezerLocation"
+                    required
+                    value={this.state.freezerLocation}
+                    onChange={this.onChange}
+                  >
+                    <MenuItem value="cellarChest"><Trans>freezer.products.add.form.freezerLocation.cellarChest</Trans></MenuItem>
+                    <MenuItem value="cellar"><Trans>freezer.products.add.form.freezerLocation.cellar</Trans></MenuItem>
+                    <MenuItem value="parents"><Trans>freezer.products.add.form.freezerLocation.parents</Trans></MenuItem>
+                    <MenuItem value="grandfather"><Trans>freezer.products.add.form.freezerLocation.grandfather</Trans></MenuItem>
+                  </Select>
+                </FormControl>
 
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel id="freezerLocation-label"><Trans>freezer.products.add.form.freezerLocation.label</Trans></InputLabel>
-                <Select
-                  labelId="freezerLocation-label"
-                  id="freezerLocation"
-                  name="freezerLocation"
-                  required
-                  value={this.state.freezerLocation}
+                <TextField
+                  id="compartment"
+                  label=<Trans>freezer.products.add.form.compartment</Trans>
+                  name="compartment"
+                  type="number"
+                  inputProps={{ min: "1", max: "4" }}
+                  variant="outlined"
+                  value={this.state.compartment}
                   onChange={this.onChange}
-                >
-                  <MenuItem value="cellarChest"><Trans>freezer.products.add.form.freezerLocation.cellarChest</Trans></MenuItem>
-                  <MenuItem value="cellar"><Trans>freezer.products.add.form.freezerLocation.cellar</Trans></MenuItem>
-                  <MenuItem value="parents"><Trans>freezer.products.add.form.freezerLocation.parents</Trans></MenuItem>
-                  <MenuItem value="grandfather"><Trans>freezer.products.add.form.freezerLocation.grandfather</Trans></MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
+                />
+              </div>
 
-            <Grid item xs={12} sm={6}>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="compartment"
-                label=<Trans>freezer.products.add.form.compartment</Trans>
-                name="compartment"
-                type="number"
-                inputProps={{ min: "1", max: "4" }}
-                fullWidth
-                value={this.state.compartment}
-                onChange={this.onChange}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
               <TextField
                 id="notes"
                 label=<Trans>freezer.products.add.form.notes</Trans>
@@ -209,19 +204,15 @@ export default class AddProductForm extends React.Component {
                 fullWidth
                 value={this.state.notes}
                 onChange={this.onChange}
+                variant="outlined"
               />
-            </Grid>
 
-            <Grid item xs={12} sm={6}>
-            </Grid>
-
-            <Grid item xs={12} sm={6}>
               <Button variant="contained" color="primary" type="submit">
                 <Trans>freezer.products.add.form.saveData</Trans>
               </Button>
-            </Grid>
-          </Grid>
-        </form>
+            </form>
+          </DialogContent>
+        </Dialog>
       </React.Fragment>
     );
   }

@@ -91,6 +91,11 @@ export default class Freezer extends React.Component {
           <div className="jss11"/>
           <Container maxWidth="lg" className="jss13">
             <Grid container spacing={3}>
+              {/* Add new Products */}
+              <Grid item xs={12}>
+                <AddProduct/>
+              </Grid>
+              <div className="jss11"/>
               {/* All Products */}
               <Grid item xs={12}>
                 <Paper className="jss14">
@@ -98,13 +103,6 @@ export default class Freezer extends React.Component {
                     products={this.state.products}
                     getAllProducts={this.getAllProducts}
                     onProductDelete={this.onProductDelete} />
-                </Paper>
-              </Grid>
-              <div className="jss11"/>
-              {/* Recent Products */}
-              <Grid item xs={12}>
-                <Paper  className="jss14">
-                  <AddProduct />
                 </Paper>
               </Grid>
             </Grid>

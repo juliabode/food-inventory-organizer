@@ -30,6 +30,7 @@
           }
         },
         "add": {
+          "button": "Neues Produkt",
           "title": "Neues Produkt hinzufügen",
           "form": {
             "name": "Name",

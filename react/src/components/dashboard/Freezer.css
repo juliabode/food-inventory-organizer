@@ -86,3 +86,20 @@
 .jss15 {
   height: 240px;
 }
+.jss110 {
+    display: flex!important;
+}
+.jss226 > div,
+.jss226 > button {
+  margin: 8px;
+}
+.jss111 {
+  margin: 0!important;
+}
+.jss111 > div {
+  margin: 8px;
+  width: calc(50% - 8px)!important;
+}
+.jss111 > div:last-child {
+  margin-right: -16px!important;
+}
