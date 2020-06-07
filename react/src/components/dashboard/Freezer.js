@@ -14,9 +14,9 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems } from '../dashboard/listItems';
-import Orders from '../dashboard/Orders';
-import AddProductForm from './AddProductForm';
+import { mainListItems } from '../common/listItems';
+import Products from '../products/Products';
+import AddProduct from '../products/AddProduct';
 
 
 const drawerWidth = 240;
@@ -151,14 +151,14 @@ export default function Freezer() {
             {/* All Products */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                <Products />
               </Paper>
             </Grid>
             <div className={classes.appBarSpacer} />
-            {/* Recent Orders */}
+            {/* Recent Products */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <AddProductForm />
+                <AddProduct />
               </Paper>
             </Grid>
           </Grid>

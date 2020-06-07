@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Dashboard from './dashboard/Dashboard.js';
-import Freezer from './myComponents/Freezer.js';
+import Dashboard from './components/dashboard/Dashboard.js';
+import Freezer from './components/dashboard/Freezer.js';
 
 const Routes = () => {
   return (
