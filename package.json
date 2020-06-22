@@ -14,12 +14,15 @@
     "express": "~4.16.1",
     "express-basic-auth": "^1.2.0",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
-    "mongoose": "^5.9.15",
+    "mongoose": "^5.9.19",
     "morgan": "~1.9.1"
   },
   "scripts": {
     "start": "node app.js",
+    "dev-server": "nodemon --exec node app.js --ignore react/",
     "heroku-postbuild": "cd react && npm install && npm run build"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }
