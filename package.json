@@ -17,12 +17,19 @@
     "mongoose": "^5.9.19",
     "morgan": "~1.9.1"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged",
+      //"pre-push": "npm run test:unit"
+    }
+  },
   "scripts": {
     "start": "node app.js",
     "dev-server": "nodemon --exec node app.js --ignore react/",
     "heroku-postbuild": "cd react && npm install && npm run build"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "prettier": "2.0.5"
   }
 }
