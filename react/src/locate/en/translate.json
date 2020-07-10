@@ -20,6 +20,8 @@
             "vegetable": "Vegetable",
             "fruit": "Fruit",
             "bread": "Bread",
+            "herbs": "Herbs",
+            "readyMeal": "Ready Meal",
             "misc": "Miscellaneous"
           },
           "freezerLocation": {
@@ -43,6 +45,8 @@
               "vegetable": "Vegetable",
               "fruit": "Fruit",
               "bread": "Bread",
+              "herbs": "Herbs",
+              "readyMeal": "Ready Meal",
               "misc": "Miscellaneous"
             },
             "quantity": "Quantity",

@@ -1,7 +1,6 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -19,77 +18,101 @@ export default class AddProductForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDialog = this.handleDialog.bind(this);
 
     this.state = {
-      name: '',
-      notes: '',
-      quantity: '',
-      type: '',
-      mhd: null,
-      freezeDate: null,
-      freezerLocation: '',
-      compartement: '',
-      openDialog: false,
+      product: {
+        name: '',
+        notes: '',
+        quantity: '',
+        type: '',
+        mhd: null,
+        freezeDate: null,
+        freezerLocation: '',
+        compartement: '',
+      },
       auth: btoa('admin:' + process.env.REACT_APP_ADMIN_PASS),
     };
   }
 
   onDateChange = (freezeDate) => {
-    this.setState({ freezeDate });
+    this.setState({ product: { ...this.state.product, freezeDate } });
   };
 
   onMhdChange = (mhd) => {
-    this.setState({ mhd });
+    this.setState({ product: { ...this.state.product, mhd } });
   };
 
   onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({
+      product: { ...this.state.product, [e.target.name]: e.target.value },
+    });
   };
-
-  handleDialog(isOpen) {
-    this.setState({ openDialog: isOpen });
-  }
 
   resetForm() {
     this.setState({
-      name: '',
-      notes: '',
-      quantity: '',
-      type: '',
-      mhd: null,
-      freezeDate: null,
-      freezerLocation: '',
-      compartement: '',
+      product: {
+        _id: '',
+        name: '',
+        notes: '',
+        quantity: '',
+        type: '',
+        mhd: null,
+        freezeDate: null,
+        freezerLocation: '',
+        compartement: '',
+      },
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const data = {
-      name: this.state.name,
-      notes: this.state.notes,
-      freezeDate: this.state.freezeDate,
-      mhd: this.state.mhd,
-      quantity: this.state.quantity,
-      type: this.state.type,
-      freezerLocation: this.state.freezerLocation,
-      compartment: this.state.compartment,
+      name: this.state.product.name,
+      notes: this.state.product.notes,
+      freezeDate: this.state.product.freezeDate,
+      mhd: this.state.product.mhd,
+      quantity: this.state.product.quantity,
+      type: this.state.product.type,
+      freezerLocation: this.state.product.freezerLocation,
+      compartment: this.state.product.compartment,
     };
 
-    fetch('/api/products', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
-        Authorization: 'Basic ' + this.state.auth,
-      },
-      body: JSON.stringify(data),
-    }).then(() => {
-      this.handleDialog(false);
-      this.resetForm();
-      this.props.addProduct(data);
-    });
+    if (this.props.productToEdit._id) {
+      data._id = this.state.product._id;
+      fetch('/api/products/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
+          Authorization: 'Basic ' + this.state.auth,
+        },
+        body: JSON.stringify(data),
+      }).then(() => {
+        this.props.handleDialog(false);
+        this.resetForm();
+        this.props.changeProduct(data);
+      });
+    } else {
+      fetch('/api/products', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
+          Authorization: 'Basic ' + this.state.auth,
+        },
+        body: JSON.stringify(data),
+      }).then(() => {
+        this.props.handleDialog(false);
+        this.resetForm();
+        this.props.addProduct(data);
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.productToEdit._id !== prevProps.productToEdit._id) {
+      this.setState({ product: this.props.productToEdit });
+    }
   }
 
   render() {
@@ -98,15 +121,15 @@ export default class AddProductForm extends React.Component {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => this.handleDialog(true)}
+          onClick={() => this.props.handleDialog(true)}
           startIcon={<AddCircleIcon />}
           className="jss110"
         >
           <Trans>freezer.products.add.button</Trans>
         </Button>
         <Dialog
-          open={this.state.openDialog}
-          onClose={() => this.handleDialog(false)}
+          open={this.props.openDialog}
+          onClose={() => this.props.handleDialog(false)}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
@@ -121,7 +144,7 @@ export default class AddProductForm extends React.Component {
                 label=<Trans>freezer.products.add.form.name</Trans>
                 fullWidth
                 required
-                value={this.state.name}
+                value={this.state.product.name}
                 onChange={this.onChange}
               />
 
@@ -133,7 +156,7 @@ export default class AddProductForm extends React.Component {
                     name="freezeDate"
                     autoOk
                     inputVariant="outlined"
-                    value={this.state.freezeDate}
+                    value={this.state.product.freezeDate}
                     onChange={this.onDateChange}
                   />
                 </MuiPickersUtilsProvider>
@@ -145,7 +168,7 @@ export default class AddProductForm extends React.Component {
                     autoOk
                     name="mhd"
                     inputVariant="outlined"
-                    value={this.state.mhd}
+                    value={this.state.product.mhd}
                     onChange={this.onMhdChange}
                   />
                 </MuiPickersUtilsProvider>
@@ -160,7 +183,7 @@ export default class AddProductForm extends React.Component {
                   id="type"
                   name="type"
                   required
-                  value={this.state.type}
+                  value={this.state.product.type}
                   onChange={this.onChange}
                 >
                   <MenuItem value="fish">
@@ -175,8 +198,11 @@ export default class AddProductForm extends React.Component {
                   <MenuItem value="fruit">
                     <Trans>freezer.products.add.form.type.fruit</Trans>
                   </MenuItem>
-                  <MenuItem value="fruit">
-                    <Trans>freezer.products.add.form.type.bread</Trans>
+                  <MenuItem value="herbs">
+                    <Trans>freezer.products.add.form.type.herbs</Trans>
+                  </MenuItem>
+                  <MenuItem value="readyMeal">
+                    <Trans>freezer.products.add.form.type.readyMeal</Trans>
                   </MenuItem>
                   <MenuItem value="misc">
                     <Trans>freezer.products.add.form.type.misc</Trans>
@@ -191,7 +217,7 @@ export default class AddProductForm extends React.Component {
                 type="number"
                 fullWidth
                 variant="outlined"
-                value={this.state.quantity}
+                value={this.state.product.quantity}
                 onChange={this.onChange}
               />
 
@@ -207,7 +233,7 @@ export default class AddProductForm extends React.Component {
                     id="freezerLocation"
                     name="freezerLocation"
                     required
-                    value={this.state.freezerLocation}
+                    value={this.state.product.freezerLocation}
                     onChange={this.onChange}
                   >
                     <MenuItem value="cellarChest">
@@ -240,7 +266,7 @@ export default class AddProductForm extends React.Component {
                   type="number"
                   inputProps={{ min: '1', max: '4' }}
                   variant="outlined"
-                  value={this.state.compartment}
+                  value={this.state.product.compartment}
                   onChange={this.onChange}
                 />
               </div>
@@ -250,14 +276,17 @@ export default class AddProductForm extends React.Component {
                 label=<Trans>freezer.products.add.form.notes</Trans>
                 name="notes"
                 fullWidth
-                value={this.state.notes}
+                value={this.state.product.notes}
                 onChange={this.onChange}
                 variant="outlined"
               />
             </form>
           </DialogContent>
           <DialogActions className="jss112">
-            <Button onClick={() => this.handleDialog(false)} color="primary">
+            <Button
+              onClick={() => this.props.handleDialog(false)}
+              color="primary"
+            >
               <Trans>freezer.products.add.form.cancel</Trans>
             </Button>
 
