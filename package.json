@@ -15,7 +15,8 @@
     "express-basic-auth": "^1.2.0",
     "http-errors": "~1.6.3",
     "mongoose": "^5.9.19",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "pretty-quick": "^3.0.2"
   },
   "husky": {
     "hooks": {
@@ -28,6 +29,7 @@
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "devDependencies": {
+    "husky": "^4.3.0",
     "nodemon": "^2.0.4",
     "prettier": "2.0.5"
   }
