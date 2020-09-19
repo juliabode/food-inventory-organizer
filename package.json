@@ -24,8 +24,8 @@
   },
   "scripts": {
     "start": "node app.js",
-    "dev-server": "nodemon --exec node app.js --ignore react/",
-    "heroku-postbuild": "cd react && npm install && npm run build"
+    "dev-server": "nodemon --exec node app.js --ignore client/",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "devDependencies": {
     "nodemon": "^2.0.4",
