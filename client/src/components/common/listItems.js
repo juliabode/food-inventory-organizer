@@ -1,14 +1,22 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { Trans } from 'react-i18next';
+
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import KitchenIcon from '@material-ui/icons/Kitchen';
 
 function ListItemLink(props) {
-  return <ListItem button component='a' {...props} />;
+  return (
+    <NavLink
+      to={props.href}
+      style={{ textDecoration: 'none', color: 'rgba(0, 0, 0, 0.87' }}
+    >
+      <ListItem button {...props} />
+    </NavLink>
+  );
 }
 
 export const mainListItems = (
@@ -17,37 +25,13 @@ export const mainListItems = (
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary=<Trans>title.dashboard</Trans> />
     </ListItemLink>
     <ListItemLink href="/freezer">
       <ListItemIcon>
         <KitchenIcon />
       </ListItemIcon>
-      <ListItemText primary="Freezer" />
+      <ListItemText primary=<Trans>title.freezer</Trans> />
     </ListItemLink>
-  </div>
-);
-
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItem>
   </div>
 );

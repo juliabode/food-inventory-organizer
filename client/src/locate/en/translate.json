@@ -1,5 +1,9 @@
 {
   "translations": {
+    "title": {
+      "dashboard": "Dashboard",
+      "freezer": "Freezer"
+    },
     "freezer": {
       "products": {
         "title": "Products",

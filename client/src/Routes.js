@@ -6,10 +6,10 @@ import Freezer from './components/dashboard/Freezer.js';
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path='/'>
+      <Route exact path="/">
         <Dashboard />
       </Route>
-      <Route path='/freezer'>
+      <Route path="/freezer">
         <Freezer />
       </Route>
     </Switch>

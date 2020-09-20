@@ -1,0 +1,20 @@
+.drawerPaper {
+  position: relative !important;
+  white-space: nowrap;
+  width: 240px;
+  transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms !important;
+}
+
+.drawerPaperClose {
+  width: 56px;
+  overflow-x: hidden;
+  transition: width 195ms cubic-bezier(0.4, 0, 0.6, 1) 0ms !important;
+}
+
+.toolbarIcon {
+  display: flex;
+  padding: 0 8px;
+  min-height: 64px;
+  align-items: center;
+  justify-content: flex-end;
+}

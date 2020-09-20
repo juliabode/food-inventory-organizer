@@ -14,9 +14,12 @@
     "express": "~4.16.1",
     "express-basic-auth": "^1.2.0",
     "http-errors": "~1.6.3",
-    "mongoose": "^5.9.19",
+    "mongoose": "^5.10.6",
     "morgan": "~1.9.1",
-    "pretty-quick": "^3.0.2"
+    "node-sass": "^4.14.1",
+    "pretty-quick": "^3.0.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "husky": {
     "hooks": {
