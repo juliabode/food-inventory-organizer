@@ -12,21 +12,29 @@ import styles from './navigation.module.scss';
 
 const Navigation = (props) => {
   return (
-    <Drawer
-      variant="permanent"
-      classes={{
-        paper: clsx(styles.drawerPaper, !props.open && styles.drawerPaperClose),
-      }}
-      open={props.open}
-    >
-      <div className={styles.toolbarIcon}>
-        <IconButton onClick={() => props.setOpen(false)}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </div>
-      <Divider />
-      <List>{mainListItems}</List>
-    </Drawer>
+    <div className={styles.background}>
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(
+            styles.drawerPaper,
+            !props.open && styles.drawerPaperClose
+          ),
+        }}
+        open={props.open}
+      >
+        <div className={styles.toolbarIcon}>
+          <IconButton
+            onClick={() => props.setOpen(false)}
+            className={styles.openIcon}
+          >
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
+        <Divider />
+        <List>{mainListItems}</List>
+      </Drawer>
+    </div>
   );
 };
 
