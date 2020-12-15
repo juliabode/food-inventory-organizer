@@ -4,6 +4,11 @@
       "dashboard": "Dashboard",
       "freezer": "Freezer"
     },
+    "global": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "ok": "Ok"
+    },
     "freezer": {
       "products": {
         "title": "Products",
@@ -62,10 +67,11 @@
               "grandfather": "Grandfather"
             },
             "compartment": "Box",
-            "notes": "Notes",
-            "saveData": "Save",
-            "cancel": "Cancel"
+            "notes": "Notes"
           }
+        },
+        "delete": {
+          "title": "Do you really want to remove the product?"
         }
       }
     }

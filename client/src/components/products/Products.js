@@ -33,6 +33,7 @@ const Products = (props) => {
     { headerName: 'freezerLocation' },
     { headerName: 'compartment' },
     { headerName: 'notes' },
+    { headerName: '' },
   ];
 
   function deleteProduct() {
@@ -53,9 +54,11 @@ const Products = (props) => {
           <TableRow>
             {tableHeaders.map((tableHeader) => (
               <TableCell key={tableHeader.headerName} align={tableHeader.align}>
-                <Trans>
-                  freezer.products.table.header.{tableHeader.headerName}
-                </Trans>
+                {tableHeader.headerName && (
+                  <Trans>
+                    freezer.products.table.header.{tableHeader.headerName}
+                  </Trans>
+                )}
               </TableCell>
             ))}
           </TableRow>
@@ -121,17 +124,19 @@ const Products = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle>{'Do you really want to remove the Product?'}</DialogTitle>
+        <DialogTitle>
+          <Trans>freezer.products.delete.title</Trans>
+        </DialogTitle>
         <DialogActions>
           <Button onClick={() => setOpen(false)} color="primary">
-            <Trans>freezer.products.add.form.cancel</Trans>
+            <Trans>global.cancel</Trans>
           </Button>
           <Button
             onClick={() => deleteProduct()}
             variant="contained"
             color="primary"
           >
-            <Trans>freezer.products.add.form.saveData</Trans>
+            <Trans>global.ok</Trans>
           </Button>
         </DialogActions>
       </Dialog>

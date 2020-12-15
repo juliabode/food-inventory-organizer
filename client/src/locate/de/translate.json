@@ -4,6 +4,11 @@
       "dashboard": "Dashboard",
       "freezer": "Tiefkühl"
     },
+    "global": {
+      "cancel": "Abbrechen",
+      "save": "Speichern",
+      "ok": "Okay"
+    },
     "freezer": {
       "products": {
         "title": "Produkte",
@@ -62,10 +67,11 @@
               "grandfather": "Opa"
             },
             "compartment": "Fach",
-            "notes": "Hinweise",
-            "saveData": "Speichern",
-            "cancel": "Abbrechen"
+            "notes": "Hinweise"
           }
+        },
+        "delete": {
+          "title": "Willst du wirklich den Eintrag löschen?"
         }
       }
     }

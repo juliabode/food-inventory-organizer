@@ -9,9 +9,11 @@ mongoose.set('useFindAndModify', false);
 
 /* GET Products listing. */
 router.get('/', function (req, res, next) {
-  Product.find({}).then((eachOne) => {
-    res.json(eachOne);
-  });
+  Product.find({})
+    .sort('name')
+    .then((eachOne) => {
+      res.json(eachOne);
+    });
 });
 
 /* SET Products listing. */

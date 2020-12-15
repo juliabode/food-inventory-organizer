@@ -201,7 +201,7 @@ const ProductDialog = (props) => {
         </DialogContent>
         <DialogActions className="jss112">
           <Button onClick={() => resetDialogForm()} color="primary">
-            <Trans>freezer.products.add.form.cancel</Trans>
+            <Trans>global.cancel</Trans>
           </Button>
           <Button
             variant="contained"
@@ -209,7 +209,7 @@ const ProductDialog = (props) => {
             type="submit"
             onClick={(event) => handleSubmit(event)}
           >
-            <Trans>freezer.products.add.form.saveData</Trans>
+            <Trans>global.save</Trans>
           </Button>
         </DialogActions>
       </Dialog>
