@@ -1,19 +1,39 @@
-import React from 'react';
-import MainContainer from './container/MainContainer';
-import './App.css';
+import React, { useState, useEffect, createContext } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import Routes from './Routes';
 
-function App() {
+import Routes from './Routes';
+import MainContainer from './container/MainContainer';
+import { getAllProducts } from './utils/api/products';
+import './App.css';
+
+const AppContext = createContext({});
+
+const App = () => {
+  const [products, setProducts] = useState();
+
+  useEffect(() => {
+    if (!products) {
+      getAllProducts().then((result) => setProducts(result));
+    }
+  }, [products]);
+
+  const store = {
+    products: { get: products, set: setProducts },
+  };
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <MainContainer>
-          <Routes />
-        </MainContainer>
-      </BrowserRouter>
+      {products && (
+        <AppContext.Provider value={store}>
+          <BrowserRouter>
+            <MainContainer>
+              <Routes />
+            </MainContainer>
+          </BrowserRouter>
+        </AppContext.Provider>
+      )}
     </div>
   );
-}
+};
 
-export default App;
+export { App, AppContext };

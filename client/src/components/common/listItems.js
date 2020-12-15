@@ -34,7 +34,7 @@ function ListItemLink(props) {
 }
 
 export const mainListItems = (
-  <div>
+  <div style={{ overflow: 'hidden' }}>
     <ListItemLink href="/">
       <ListItemIcon>
         <DashboardIcon

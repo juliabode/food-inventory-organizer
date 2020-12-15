@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Dashboard from './components/dashboard/Dashboard.js';
-import Freezer from './components/dashboard/Freezer.js';
+import Dashboard from './components/pages/Dashboard.js';
+import FreezerPage from './components/pages/FreezerPage.js';
 
 const Routes = () => {
   return (
@@ -10,7 +10,7 @@ const Routes = () => {
         <Dashboard />
       </Route>
       <Route path="/freezer">
-        <Freezer />
+        <FreezerPage />
       </Route>
     </Switch>
   );
