@@ -55,7 +55,21 @@ router.post('/update', function (req, res) {
       compartment: req.body.compartment,
       notes: req.body.notes,
     }
-  ).then(res.send('product removed'));
+  ).then(res.send('product updated'));
+});
+
+/* Filter product */
+router.get('/filter', function (req, res, next) {
+  //var name = req.params.name.replace(/-/g, ' ');
+  /*query = {}
+  if ( req.body.hasOwnProperty('type') )
+    query.type = req.body.type;*/
+
+  Product.find(req.query)
+    .sort('name')
+    .then((eachOne) => {
+      res.json(eachOne);
+    });
 });
 
 module.exports = router;
