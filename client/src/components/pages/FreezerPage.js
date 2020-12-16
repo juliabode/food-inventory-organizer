@@ -2,14 +2,17 @@ import React, { useState, useContext } from 'react';
 import { Trans } from 'react-i18next';
 
 import Button from '@material-ui/core/Button';
+import Collapse from '@material-ui/core/Collapse';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import TuneIcon from '@material-ui/icons/Tune';
 
 import { AppContext } from '../../App.js';
 import Products from '../products/Products';
 import ProductDialog from '../products/ProductDialog';
+import ProductFilter from '../products/ProductFilter';
 import IProduct from '../../utils/schema/product.js';
 import { getAllProducts } from '../../utils/api/products';
 
@@ -20,6 +23,7 @@ const FreezerPage = () => {
 
   const [productToEdit, setProductToEdit] = useState({ ...IProduct });
   const [openProductDialog, setOpenProductDialog] = useState(false);
+  const [openFilters, setOpenFilters] = useState(false);
 
   function getUpdatedProductList() {
     getAllProducts().then((result) => context.products.set(result));
@@ -34,7 +38,7 @@ const FreezerPage = () => {
     <Container maxWidth="lg" className="jss13">
       <Grid container spacing={3}>
         {/* Add new Products */}
-        <Grid item xs={12}>
+        <Grid item xs={6}>
           <Button
             variant="outlined"
             color="primary"
@@ -52,7 +56,30 @@ const FreezerPage = () => {
             setOpenProductDialog={setOpenProductDialog}
           />
         </Grid>
-        <div className="jss11" />
+        <Grid item xs={6}>
+          <Grid container spacing={3} justify="flex-end">
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => setOpenFilters(!openFilters)}
+                startIcon={<TuneIcon />}
+                className="jss110"
+              >
+                <Trans>freezer.products.filter.open</Trans>
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Collapse in={openFilters} className="collapse">
+          <Grid item xs={12}>
+            <Paper className="jss14">
+              <ProductFilter
+                getUpdatedProductList={getUpdatedProductList}
+              ></ProductFilter>
+            </Paper>
+          </Grid>
+        </Collapse>
         {/* All Products */}
         <Grid item xs={12}>
           <Paper className="jss14">

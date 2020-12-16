@@ -113,3 +113,11 @@
   padding-right: 24px !important;
   padding-bottom: 24px !important;
 }
+
+.collapse {
+  width: 100%;
+}
+
+.collapse > div {
+  margin: 12px;
+}

@@ -7,7 +7,8 @@
     "global": {
       "cancel": "Cancel",
       "save": "Save",
-      "ok": "Ok"
+      "ok": "Ok",
+      "search": "Search"
     },
     "freezer": {
       "products": {
@@ -39,6 +40,10 @@
             "parents": "Parents",
             "grandfather": "Grandfather"
           }
+        },
+        "filter": {
+          "open": "Filter",
+          "resetFilters": "Reset all filters"
         },
         "add": {
           "button": "Neues Product",

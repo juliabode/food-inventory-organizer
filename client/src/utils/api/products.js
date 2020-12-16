@@ -40,3 +40,11 @@ export const removeProduct = async (data) =>
     },
     body: JSON.stringify(data),
   }).then(() => {});
+
+export const filterAllProducts = async (data) =>
+  fetch('/api/products/filter?' + new URLSearchParams(data), {
+    headers: {
+      /* TO BE REMOVED WHEN CREATING USER ACCOUNTS! */
+      Authorization: 'Basic ' + auth,
+    },
+  }).then((res) => res.json());
