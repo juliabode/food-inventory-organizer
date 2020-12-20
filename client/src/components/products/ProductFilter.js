@@ -31,9 +31,11 @@ const ProductFilter = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    filterAllProducts(filterData).then((result) =>
-      context.products.set(result)
-    );
+    filterAllProducts(filterData).then((result) => {
+      context.products.set(result);
+      context.pagination.totals.set(result.length);
+      context.pagination.page.set(1);
+    });
   }
 
   function onChange(e) {

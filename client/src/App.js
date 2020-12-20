@@ -10,15 +10,30 @@ const AppContext = createContext({});
 
 const App = () => {
   const [products, setProducts] = useState();
+  const [totals, setTotals] = useState();
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     if (!products) {
-      getAllProducts().then((result) => setProducts(result));
+      getAllProducts().then((result) => {
+        setProducts(result);
+        setTotals(result.length);
+      });
     }
   }, [products]);
 
   const store = {
     products: { get: products, set: setProducts },
+    pagination: {
+      totals: {
+        get: totals,
+        set: setTotals,
+      },
+      page: {
+        get: page,
+        set: setPage,
+      },
+    },
   };
 
   return (

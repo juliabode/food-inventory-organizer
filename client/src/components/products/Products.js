@@ -18,9 +18,10 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import Title from '../common/Title';
 import { removeProduct } from '../../utils/api/products';
+import { PAGE_SIZE } from '../../utils/constants';
 
 const Products = (props) => {
-  const { products, editProduct, getUpdatedProductList } = { ...props };
+  const { products, editProduct, getUpdatedProductList, page } = { ...props };
   const [open, setOpen] = useState(false);
   const [activeProduct, setActiveProduct] = useState();
 
@@ -35,6 +36,9 @@ const Products = (props) => {
     { headerName: 'notes' },
     { headerName: '' },
   ];
+
+  const entryStart = (page - 1) * PAGE_SIZE;
+  const entryEnd = entryStart + PAGE_SIZE;
 
   function deleteProduct() {
     setOpen(false);
@@ -64,7 +68,7 @@ const Products = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((product) => (
+          {products.slice(entryStart, entryEnd).map((product) => (
             <TableRow key={product._id}>
               <TableCell>{product.name}</TableCell>
               <TableCell>

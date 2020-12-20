@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Collapse from '@material-ui/core/Collapse';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Pagination from '@material-ui/lab/Pagination';
 import Paper from '@material-ui/core/Paper';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import TuneIcon from '@material-ui/icons/Tune';
@@ -15,6 +16,7 @@ import ProductDialog from '../products/ProductDialog';
 import ProductFilter from '../products/ProductFilter';
 import IProduct from '../../utils/schema/product.js';
 import { getAllProducts } from '../../utils/api/products';
+import { PAGE_SIZE } from '../../utils/constants';
 
 import './Freezer.css';
 
@@ -25,14 +27,23 @@ const FreezerPage = () => {
   const [openProductDialog, setOpenProductDialog] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
 
+  const pagesCount = Math.ceil(context.pagination.totals.get / PAGE_SIZE);
+
   function getUpdatedProductList() {
-    getAllProducts().then((result) => context.products.set(result));
+    getAllProducts().then((result) => {
+      context.products.set(result);
+      context.pagination.totals.set(result.length);
+    });
   }
 
   function editProduct(product) {
     setProductToEdit({ ...product });
     setOpenProductDialog(true);
   }
+
+  const handlePageChange = (event, value) => {
+    context.pagination.page.set(value);
+  };
 
   return (
     <Container maxWidth="lg" className="jss13">
@@ -83,11 +94,26 @@ const FreezerPage = () => {
         {/* All Products */}
         <Grid item xs={12}>
           <Paper className="jss14">
-            <Products
-              products={context.products.get}
-              editProduct={editProduct}
-              getUpdatedProductList={getUpdatedProductList}
-            />
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Products
+                  products={context.products.get}
+                  editProduct={editProduct}
+                  getUpdatedProductList={getUpdatedProductList}
+                  page={context.pagination.page.get}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container justify="center">
+                  <Pagination
+                    count={pagesCount}
+                    page={context.pagination.page.get}
+                    variant="outlined"
+                    onChange={handlePageChange}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
           </Paper>
         </Grid>
       </Grid>
