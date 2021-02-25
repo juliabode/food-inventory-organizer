@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cn from 'classnames';
 import { Trans } from 'react-i18next';
 import moment from 'moment';
 
@@ -13,25 +14,37 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import ArrowDropDownRoundedIcon from '@material-ui/icons/ArrowDropDownRounded';
+import ArrowDropUpRoundedIcon from '@material-ui/icons/ArrowDropUpRounded';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import Title from '../common/Title';
 import { removeProduct } from '../../utils/api/products';
 import { PAGE_SIZE } from '../../utils/constants';
+import styles from './products.module.scss';
 
 const Products = (props) => {
-  const { products, editProduct, getUpdatedProductList, page } = { ...props };
+  const {
+    products,
+    editProduct,
+    getUpdatedProductList,
+    page,
+    sorting,
+    filterProducts,
+  } = {
+    ...props,
+  };
   const [open, setOpen] = useState(false);
   const [activeProduct, setActiveProduct] = useState();
 
   const tableHeaders = [
-    { headerName: 'name' },
-    { headerName: 'freezeDate' },
-    { headerName: 'bestBefore' },
-    { headerName: 'type' },
+    { headerName: 'name', sortable: true },
+    { headerName: 'freezeDate', sortable: true },
+    { headerName: 'mhd', sortable: true },
+    { headerName: 'type', sortable: true },
     { headerName: 'quantity', align: 'right' },
-    { headerName: 'freezerLocation' },
+    { headerName: 'freezerLocation', sortable: true },
     { headerName: 'compartment' },
     { headerName: 'notes' },
     { headerName: '' },
@@ -39,6 +52,12 @@ const Products = (props) => {
 
   const entryStart = (page - 1) * PAGE_SIZE;
   const entryEnd = entryStart + PAGE_SIZE;
+
+  const sortProductList = (sortName, direction) => {
+    sorting.sort.set(sortName);
+    sorting.direction.set(direction);
+    filterProducts(sortName, direction);
+  };
 
   function deleteProduct() {
     setOpen(false);
@@ -55,13 +74,42 @@ const Products = (props) => {
       </Title>
       <Table size="small">
         <TableHead>
-          <TableRow>
+          <TableRow className={styles.tableHead}>
             {tableHeaders.map((tableHeader) => (
               <TableCell key={tableHeader.headerName} align={tableHeader.align}>
                 {tableHeader.headerName && (
-                  <Trans>
-                    freezer.products.table.header.{tableHeader.headerName}
-                  </Trans>
+                  <>
+                    {tableHeader.sortable ? (
+                      <div
+                        className={cn(styles.clickableHeader, {
+                          [styles[`direction${sorting.direction.get}`]]:
+                            sorting.sort.get === tableHeader.headerName,
+                        })}
+                        onClick={() =>
+                          sortProductList(
+                            tableHeader.headerName,
+                            sorting.sort.get !== tableHeader.headerName
+                              ? sorting.direction.get
+                              : sorting.direction.get === 'DESC'
+                              ? 'ASC'
+                              : 'DESC'
+                          )
+                        }
+                      >
+                        <Trans>
+                          freezer.products.table.header.{tableHeader.headerName}
+                        </Trans>
+                        <span className={styles.sortableArrows}>
+                          <ArrowDropUpRoundedIcon />
+                          <ArrowDropDownRoundedIcon />
+                        </span>
+                      </div>
+                    ) : (
+                      <Trans>
+                        freezer.products.table.header.{tableHeader.headerName}
+                      </Trans>
+                    )}
+                  </>
                 )}
               </TableCell>
             ))}
@@ -69,7 +117,7 @@ const Products = (props) => {
         </TableHead>
         <TableBody>
           {products.slice(entryStart, entryEnd).map((product) => (
-            <TableRow key={product._id}>
+            <TableRow key={product._id} className={styles.tableRow}>
               <TableCell>{product.name}</TableCell>
               <TableCell>
                 {product.freezeDate

@@ -15,7 +15,7 @@ import Products from '../products/Products';
 import ProductDialog from '../products/ProductDialog';
 import ProductFilter from '../products/ProductFilter';
 import IProduct from '../../utils/schema/product.js';
-import { getAllProducts } from '../../utils/api/products';
+import { getAllProducts, filterAllProducts } from '../../utils/api/products';
 import { PAGE_SIZE } from '../../utils/constants';
 
 import './Freezer.css';
@@ -26,11 +26,15 @@ const FreezerPage = () => {
   const [productToEdit, setProductToEdit] = useState({ ...IProduct });
   const [openProductDialog, setOpenProductDialog] = useState(false);
   const [openFilters, setOpenFilters] = useState(false);
+  const [filterData, setFilterData] = useState();
 
   const pagesCount = Math.ceil(context.pagination.totals.get / PAGE_SIZE);
 
-  function getUpdatedProductList() {
-    getAllProducts().then((result) => {
+  function getUpdatedProductList(sort, direction) {
+    getAllProducts({
+      sort: sort || context.sorting.sort.get,
+      direction: direction || context.sorting.direction.get,
+    }).then((result) => {
       context.products.set(result);
       context.pagination.totals.set(result.length);
     });
@@ -43,6 +47,18 @@ const FreezerPage = () => {
 
   const handlePageChange = (event, value) => {
     context.pagination.page.set(value);
+  };
+
+  const filterProducts = (sort, direction) => {
+    filterAllProducts({
+      sort: sort || context.sorting.sort.get,
+      direction: direction || context.sorting.direction.get,
+      ...filterData,
+    }).then((result) => {
+      context.products.set(result);
+      context.pagination.totals.set(result.length);
+      context.pagination.page.set(1);
+    });
   };
 
   return (
@@ -87,6 +103,9 @@ const FreezerPage = () => {
             <Paper className="jss14">
               <ProductFilter
                 getUpdatedProductList={getUpdatedProductList}
+                filterData={filterData}
+                setFilterData={setFilterData}
+                filterProducts={filterProducts}
               ></ProductFilter>
             </Paper>
           </Grid>
@@ -101,6 +120,8 @@ const FreezerPage = () => {
                   editProduct={editProduct}
                   getUpdatedProductList={getUpdatedProductList}
                   page={context.pagination.page.get}
+                  sorting={context.sorting}
+                  filterProducts={filterProducts}
                 />
               </Grid>
               <Grid item xs={12}>

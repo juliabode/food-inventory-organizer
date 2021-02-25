@@ -1,0 +1,63 @@
+.tableHead th {
+  font-weight: bold;
+  padding: 16px 24px 24px 16px;
+  text-transform: uppercase;
+}
+
+.tableRow {
+  &:nth-child(2n-1) {
+    background: rgba(0, 0, 0, 0.03);
+  }
+
+  td {
+    padding: 16px 24px 16px 16px;
+  }
+}
+
+.clickableHeader {
+  cursor: pointer;
+  display: flex;
+}
+
+.directionDESC {
+  .sortableArrows {
+    svg {
+      opacity: 1;
+    }
+
+    svg:first-child {
+      display: none;
+      margin: 0;
+    }
+  }
+}
+
+.directionASC {
+  .sortableArrows {
+    svg {
+      opacity: 1;
+    }
+
+    svg:first-child {
+      margin: 0;
+    }
+
+    svg:last-child {
+      display: none;
+    }
+  }
+}
+
+.sortableArrows {
+  display: flex;
+  flex-direction: column;
+
+  svg {
+    opacity: 0.4;
+  }
+
+  svg:first-child {
+    margin-bottom: -18px;
+    margin-top: -5px;
+  }
+}

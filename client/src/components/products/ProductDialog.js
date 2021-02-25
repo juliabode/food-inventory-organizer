@@ -112,7 +112,7 @@ const ProductDialog = (props) => {
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <DatePicker
                   format="dd. MM. yyyy"
-                  label={<Trans>freezer.products.add.form.bestBefore</Trans>}
+                  label={<Trans>freezer.products.add.form.mhd</Trans>}
                   autoOk
                   name="mhd"
                   inputVariant="outlined"

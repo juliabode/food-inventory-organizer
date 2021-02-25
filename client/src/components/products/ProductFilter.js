@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { Trans } from 'react-i18next';
 
 import Button from '@material-ui/core/Button';
@@ -8,14 +8,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-import { AppContext } from '../../App.js';
-import { filterAllProducts } from '../../utils/api/products';
-
 const ProductFilter = (props) => {
-  const { getUpdatedProductList } = { ...props };
-  const context = useContext(AppContext);
-
-  const [filterData, setFilterData] = useState();
+  const { getUpdatedProductList, filterData, setFilterData, filterProducts } = {
+    ...props,
+  };
 
   const foodTypes = [
     'fish',
@@ -31,11 +27,7 @@ const ProductFilter = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    filterAllProducts(filterData).then((result) => {
-      context.products.set(result);
-      context.pagination.totals.set(result.length);
-      context.pagination.page.set(1);
-    });
+    filterProducts();
   }
 
   function onChange(e) {

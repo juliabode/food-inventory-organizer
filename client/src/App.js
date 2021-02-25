@@ -12,6 +12,8 @@ const App = () => {
   const [products, setProducts] = useState();
   const [totals, setTotals] = useState();
   const [page, setPage] = useState(1);
+  const [sort, setSort] = useState('name');
+  const [sortDirection, setSortDirection] = useState('ASC');
 
   useEffect(() => {
     if (!products) {
@@ -32,6 +34,16 @@ const App = () => {
       page: {
         get: page,
         set: setPage,
+      },
+    },
+    sorting: {
+      sort: {
+        get: sort,
+        set: setSort,
+      },
+      direction: {
+        get: sortDirection,
+        set: setSortDirection,
       },
     },
   };

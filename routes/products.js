@@ -7,10 +7,12 @@ const url = process.env.MONGODB_URI;
 mongoose.connect(url, { useNewUrlParser: true });
 mongoose.set('useFindAndModify', false);
 
+//mongoose.set('debug', true);
+
 /* GET Products listing. */
 router.get('/', function (req, res, next) {
   Product.find({})
-    .sort('name')
+    .sort({ [req.query.sort]: [req.query.direction] })
     .then((eachOne) => {
       res.json(eachOne);
     });
@@ -60,13 +62,17 @@ router.post('/update', function (req, res) {
 
 /* Filter product */
 router.get('/filter', function (req, res, next) {
-  //var name = req.params.name.replace(/-/g, ' ');
-  /*query = {}
-  if ( req.body.hasOwnProperty('type') )
-    query.type = req.body.type;*/
+  const filterQuery = Object.keys(req.query).reduce((mappedQuery, key) => {
+    const param = req.query[key];
+    if (key !== 'sort' && key !== 'direction') {
+      mappedQuery[key] = param;
+    }
 
-  Product.find(req.query)
-    .sort('name')
+    return mappedQuery;
+  }, {});
+
+  Product.find(filterQuery)
+    .sort({ [req.query.sort]: [req.query.direction] })
     .then((eachOne) => {
       res.json(eachOne);
     });

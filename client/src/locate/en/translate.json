@@ -17,7 +17,7 @@
           "header": {
             "name": "Name",
             "freezeDate": "Freeze Date",
-            "bestBefore": "Best Before",
+            "mhd": "Best Before",
             "type": "Type",
             "quantity": "Quantity",
             "freezerLocation": "Location",
@@ -51,7 +51,7 @@
           "form": {
             "name": "Name",
             "freezeDate": "Freeze Date",
-            "bestBefore": "Best Before",
+            "mhd": "Best Before",
             "type": {
               "label": "Type",
               "fish": "Fish",
