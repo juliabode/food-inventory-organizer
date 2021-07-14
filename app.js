@@ -11,12 +11,12 @@ var productsRouter = require('./routes/products');
 
 var app = express();
 
-app.use(
+/*app.use(
   basicAuth({
     users: { admin: process.env.ADMIN_PASS },
     challenge: true,
   })
-);
+);*/
 
 app.use(logger('dev'));
 app.use(express.json());
